@@ -1,0 +1,25 @@
+{
+    "database": {
+        "address": "localhost",
+        "port": 5432,
+        "user": "postgres",
+        "password": ""
+    },
+
+    "rconData": {
+        "address": "",
+        "port": ,
+        "password": ""
+    },
+
+    "discordData": {
+        "token": "",
+        "prefix": "!"
+    },
+
+    "mongoData": {
+        "url":        "",
+        "database":   "",
+        "collection": ""
+    }
+}
