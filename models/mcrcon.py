@@ -1,3 +1,8 @@
+"""
+    Repositories of the author of this code https://github.com/barneygale/MCRcon
+    I added the function send a command (sendCommand)
+"""
+
 import socket
 import collections
 import struct
