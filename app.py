@@ -3,10 +3,6 @@ import discord, os
 from discord.ext import commands
 from pymongo import MongoClient
 
-from models.functions import getSettings, passwordGen, setStatus, getStatus, delStatus
-from models.mcrcon import sendCommand
-from models.snowflakes import checkBotTime
-
 
 
 def main(client):
