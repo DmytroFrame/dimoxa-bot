@@ -11,14 +11,11 @@ def passwordGen(amount=8):
     return password
 
 
-
-
 def getSettings(name):
     with open("settings.json", "r") as file:
         array = json.load(file)
         file.close()
     return array[name]
-
 
 
 def setStatus(id, status):
@@ -33,6 +30,7 @@ def getStatus(id):
         return array[str(id)]
     except:
         return None
+
 
 def delStatus(id):
     array = readJsonFile("progresUsers.json")
