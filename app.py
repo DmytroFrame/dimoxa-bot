@@ -1,8 +1,8 @@
-# -- coding: utf-8 --
-import discord, os
+import os
+import discord
 from discord.ext import commands
-from pymongo import MongoClient
 
+import models.functions as func
 
 
 def main(client):
@@ -51,6 +51,6 @@ def main(client):
 
 
 if __name__ == "__main__":
-    client = commands.Bot(command_prefix = getSettings("discordData")["prefix"])
+    client = commands.Bot(command_prefix = func.getSettings("discordData")["prefix"])
     main(client)
-    client.run(getSettings("discordData")["token"])
+    client.run(func.getSettings("discordData")["token"])
