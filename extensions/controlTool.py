@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 import models.functions as func 
-from models.mcrcon import sendCommand
+from models.async_mcrcon import MinecraftClient
 
 
 
@@ -11,7 +11,10 @@ def setup(client):
     @client.command(pass_context = True)
     @commands.has_role(func.getSettings('roles_id')['controlpanel'])
     async def broadcast(ctx, *, content):
-        sendCommand([f'broadcast {content}'])
+        rconData = func.getSettings('rconData')
+        async with MinecraftClient(rconData['address'], rconData['port'], rconData['password']) as mc:
+            await mc.send(f'broadcast {content}')
+
         await ctx.send("Ваши слова были услышаны на сервере")
 
 
