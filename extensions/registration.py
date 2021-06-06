@@ -29,33 +29,43 @@ class Registration(commands.Cog):
                 await ctx.send("Даный ник нейм уже занят")
 
             else:
-                await ctx.send("окей, напиши пароль который ты хочеш")
-                casht.setStatus(ctx.author.id, ["wait_password", username])
-
-
-    @commands.command(pass_context=True)
-    async def addpass(self, ctx, password = None):
-        status = casht.getStatus(ctx.author.id)
-        if status[0] == "wait_password":
-            if password is None:
                 password = func.passwordGen(12)
 
-            if not self.check_validation_password(password):
-                await ctx.send("херня пароль, придумай другой")
-
-            else:
-                await ctx.send("окей")
+                await ctx.author.send(f"окей поздровляю тебя твой ||{password}||")
                 
                 member = ctx.message.author
+                
                 role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
                 await member.add_roles(role)
-
-                casht.delStatus(ctx.author.id)
 
                 role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
                 await member.remove_roles(role)
 
-                self.registration_on_db(status[1], password, ctx.author.id)
+                self.registration_on_db(username, password, ctx.author.id)
+
+    # @commands.command(pass_context=True)
+    # async def addpass(self, ctx, password = None):
+    #     status = casht.getStatus(ctx.author.id)
+    #     if status[0] == "wait_password":
+    #         if password is None:
+    #             password = func.passwordGen(12)
+
+    #         if not self.check_validation_password(password):
+    #             await ctx.send("херня пароль, придумай другой")
+
+    #         else:
+    #             await ctx.send("окей поздровляю тебя")
+                
+    #             member = ctx.message.author
+    #             role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
+    #             await member.add_roles(role)
+
+    #             casht.delStatus(ctx.author.id)
+
+    #             role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+    #             await member.remove_roles(role)
+
+    #             self.registration_on_db(status[1], password, ctx.author.id)
     
     
     def check_username_on_db(self, username):

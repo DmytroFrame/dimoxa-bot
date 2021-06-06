@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 
 def passwordGen(amount=8):
-    charsPass = "qwertyuiopasdfghjklzxcvbnm"
+    charsPass = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     password = ""
     while amount > 0:
         password += random.choice(charsPass)
