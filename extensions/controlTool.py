@@ -8,12 +8,19 @@ from models.mcrcon import sendCommand
 
 def setup(client):
 
-    @client.command( pass_context = True)
-    @commands.has_role(802536798760206406)
+    @client.command(pass_context = True)
+    @commands.has_role(func.getSettings('roles_id')['controlpanel'])
     async def broadcast(ctx, *, content):
         sendCommand([f'broadcast {content}'])
         await ctx.send("Ваши слова были услышаны на сервере")
 
+
+
+    @client.command( pass_context = True )
+    @commands.has_role(func.getSettings('roles_id')['controlpanel'])
+    async def echo(ctx, *, content):
+        await ctx.channel.purge( limit = 1)
+        await ctx.send(content)
 
 
     # @client.command( pass_context = True)

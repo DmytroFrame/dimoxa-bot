@@ -2,8 +2,6 @@ import discord
 from discord.ext import commands
 
 
-
-
 class Status(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -13,11 +11,6 @@ class Status(commands.Cog):
     async def on_ready(self):
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="you mom"))
         print("\n✅ Bot his online")
-
-
-
-
-
 
 
 

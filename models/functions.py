@@ -1,4 +1,8 @@
-import random, json
+import json
+import random
+from pymongo import MongoClient
+
+
 
 
 def passwordGen(amount=8):
@@ -18,26 +22,6 @@ def getSettings(name):
     return array[name]
 
 
-def setStatus(id, status):
-    array = readJsonFile("progresUsers.json")
-    array.update({str(id): status})
-    writeJsonFile("progresUsers.json", array)
-
-
-def getStatus(id):
-    try:
-        array = readJsonFile("progresUsers.json")
-        return array[str(id)]
-    except:
-        return None
-
-
-def delStatus(id):
-    array = readJsonFile("progresUsers.json")
-    del array[str(id)]
-    writeJsonFile("progresUsers.json", array)
-
-
 def readJsonFile(fileName):
     with open(fileName, "r") as file:
         data = json.load(file)
@@ -51,4 +35,10 @@ def writeJsonFile(fileName, data):
         file.close()
 
 
-# print(getSettings("rconData"))
+def cursor_database(collection = None):
+    clientDB = MongoClient(getSettings("mongoData")["url"])
+    if collection == None:
+        return clientDB[getSettings("mongoData")["database"]]
+    else:
+        db = clientDB[getSettings("mongoData")["database"]]
+        return db[collection]

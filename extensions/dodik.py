@@ -13,8 +13,8 @@ def setup(client):
     #     print("good")
 
 
-    @commands.command()
-    async def his(self, ctx):
+    @client.command( pass_context = True)
+    async def hi(ctx):
         await ctx.send("hi debil2.0 for reload")
 
 
