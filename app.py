@@ -40,17 +40,32 @@ def main(client):
 
     @client.command()
     @commands.has_permissions(administrator = True)
-    async def reload(ctx, extension):
-        try:
-            client.unload_extension(f"extensions.{extension}")
-        finally:
-            message = load_model(extension)
-            await ctx.send(message)
-            print(message)
+    async def reload(ctx, extension = None):
+        if extension == None:
+            for filename in os.listdir("./extensions"):
+                if filename.endswith(".py"):
+                    try:
+                        client.unload_extension(f"extensions.{filename[:-3]}")
+                    finally:
+                        try:
+                            message = load_model(filename[:-3])
+                            await ctx.send(message)
+                            print(message)
+                        except:
+                            pass
+
+        else:
+            try:
+                client.unload_extension(f"extensions.{extension}")
+            finally:
+                message = load_model(extension)
+                await ctx.send(message)
+                print(message)
 
 
 
 if __name__ == "__main__":
-    client = commands.Bot(command_prefix = func.getSettings("discordData")["prefix"])
+    discordData = func.getSettings("discordData")
+    client = commands.Bot(command_prefix = discordData["prefix"])
     main(client)
-    client.run(func.getSettings("discordData")["token"])
+    client.run(discordData["token"])

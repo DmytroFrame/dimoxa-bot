@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 
-
-
 import models.functions as func
 import models.cashTool as casht
 
@@ -14,17 +12,18 @@ class Registration(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    
+    @commands.command(aliases=['reg'])
     @commands.has_role(func.getSettings('roles_id')['logged_no'])
-    @commands.command()
-    async def reg(self, ctx, username):
+    async def registration(self, ctx, username):
         """
             каво?
         """
-        if not self.check_validation(username):
+        if not func.check_validation(username):
             await ctx.send("С таким ноком можеш не заходить!")
         
         else:
-            if self.check_username_on_db(username):
+            if func.check_username_on_db(username):
                 await ctx.send("Даный ник нейм уже занят")
 
             else:
@@ -42,6 +41,7 @@ class Registration(commands.Cog):
 
                 self.registration_on_db(username, password, ctx.author.id)
 
+
     # @commands.command(pass_context=True)
     # async def addpass(self, ctx, password = None):
     #     status = casht.getStatus(ctx.author.id)
@@ -49,7 +49,7 @@ class Registration(commands.Cog):
     #         if password is None:
     #             password = func.passwordGen(12)
 
-    #         if not self.check_validation_password(password):
+    #         if not func.check_validation_password(password):
     #             await ctx.send("херня пароль, придумай другой")
 
     #         else:
@@ -70,36 +70,6 @@ class Registration(commands.Cog):
     def check_username_on_db(self, username):
         cursor = func.cursor_database('users')
         return cursor.count_documents({"username": username})
-
-
-    def check_validation(self, userString):
-        if len(userString) < 3 or len(userString) > 22:
-            return False
-         
-        validChars = "_-qwertyuiopasdfghjklzxcvbnm0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
-        customString = ""
-        for user in userString:
-            for valid in validChars:
-                if user == valid:
-                    customString += valid
-                    break
-
-        return userString == customString
-
-
-    def check_validation_password(self, password):
-        if len(password) < 8 or len(password) > 32:
-            return False
-         
-        validChars = "_-qwertyuiopasdfghjklzxcvbnm0123456789QWERTYUIOPASDFGHJKLZXCVBNM@#$%!"
-        customString = ""
-        for user in password:
-            for valid in validChars:
-                if user == valid:
-                    customString += valid
-                    break
-
-        return password == customString
 
 
     def registration_on_db(self, username, password, discord_id):

@@ -7,7 +7,6 @@ from models.async_mcrcon import MinecraftClient
 
 
 def setup(client):
-
     @client.command(pass_context = True)
     @commands.has_role(func.getSettings('roles_id')['controlpanel'])
     async def broadcast(ctx, *, content):
