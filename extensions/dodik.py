@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord_components import button, ButtonStyle
 
 
+import models.functions as func
 
 def setup(client):
     # pass
@@ -36,9 +37,14 @@ def setup(client):
     #     await ctx.send(embed = emb) # теперь бот сообщает что всё вышло.
 
     @client.command( pass_context = True)
-    @commands.has_any_role(704366187567644702, 802536798760206406)
+    # @commands.has_any_role(704366187567644702, 802536798760206406)
     async def hi(ctx):
-        await ctx.send("hi debil2.0 for reload")
+        member = ctx.message.author
+        roleYes = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
+        roleNo = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+        if not roleYes in member.roles and not roleNo in member.roles:
+            role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+            await member.add_roles(role)
 
 
 

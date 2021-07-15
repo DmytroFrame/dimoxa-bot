@@ -4,6 +4,8 @@ from discord.ext import commands
 import models.functions as func
 import models.cashTool as casht
 
+from models.async_mcrcon import MinecraftClient
+
 
 class Registration(commands.Cog):
     """
@@ -13,33 +15,46 @@ class Registration(commands.Cog):
         self.client = client
 
     
-    @commands.command(aliases=['reg'])
-    @commands.has_role(func.getSettings('roles_id')['logged_no'])
+    @commands.command(name = 'reg')
+    # @commands.has_role(func.getSettings('roles_id')['logged_no'])
     async def registration(self, ctx, username):
         """
-            каво?
+            !reg ник - команда для рега
         """
-        if not func.check_validation(username):
-            await ctx.send("С таким ноком можеш не заходить!")
-        
-        else:
-            if func.check_username_on_db(username):
-                await ctx.send("Даный ник нейм уже занят")
+        member = ctx.message.author
+        roleYes = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
+        roleNo = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+        if not roleYes in member.roles and not roleNo in member.roles:
+            role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+            await member.add_roles(role)
 
+        if not roleYes in member.roles:
+            if not func.check_validation(username):
+                await ctx.send("Придумай другой ник")
+            
             else:
-                password = func.passwordGen(12)
+                if self.check_username_on_db(username):
+                    await ctx.send("Данный никнейм уже занят")
 
-                await ctx.author.send(f"окей поздровляю тебя твой ||{password}||")
-                
-                member = ctx.message.author
-                
-                role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
-                await member.add_roles(role)
+                else:
+                    password = func.passwordGen(12)
 
-                role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
-                await member.remove_roles(role)
+                    await ctx.send(f"Окей.. так и быть **{username}**")
+                    await ctx.author.send(f"Поздравляю тебя **{username}**!\nТвой Пароль ||{password}||\nIP: play.mcteaparty.fun")#\nСкачать лаунчер можешь тут: https://cdn.discordapp.com/attachments/829879145253175366/852038720734625822/NightLauncher.exe\np.s. это бета)) 
+                    
+                    member = ctx.message.author
+                    
+                    role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_yes'])
+                    await member.add_roles(role)
 
-                self.registration_on_db(username, password, ctx.author.id)
+                    role = discord.utils.get(member.guild.roles, id=func.getSettings('roles_id')['logged_no'])
+                    await member.remove_roles(role)
+
+                    self.registration_on_db(username, password, ctx.author.id)
+
+                    rconData = func.getSettings('rconData')
+                    async with MinecraftClient(rconData['address'], rconData['port'], rconData['password']) as mc:
+                        await mc.send(f'authme register {username} {password}')
 
 
     # @commands.command(pass_context=True)
@@ -100,6 +115,7 @@ class Registration(commands.Cog):
             "banToData": None,
             "banUnixTime": None
         })
+
 
 
 def setup(client):

@@ -1,10 +1,10 @@
 import os
 import discord
 from discord.ext import commands
-from discord_components import Button, ButtonStyle
+# from discord_components import Button, ButtonStyle
 
 import models.functions as func
-
+from models.async_mcrcon import MinecraftClient
 
 class CustomizeUser(commands.Cog):
     """
@@ -19,10 +19,16 @@ class CustomizeUser(commands.Cog):
         if not func.check_validation_password(password):
             await ctx.send("хуйня")
         else:
-            await ctx.send("пароль я поменял")
+            await ctx.send("Пароль я поменял")
             cursor = func.cursor_database('users')
-            cursor.update_one({"discordID": ctx.author.id}, {"$set": {"password": password}})
-            await ctx.send(str("good"))
+            fullUserData = cursor.find_one({"discordID": ctx.author.id})
+            cursor.update_one({"_id": fullUserData['_id']}, {"$set": {"password": password}})
+
+            rconData = func.getSettings('rconData')
+            async with MinecraftClient(rconData['address'], rconData['port'], rconData['password']) as mc:
+                await mc.send(f"authme changepassword {fullUserData['username']} {password}")
+
+            await ctx.send(str("успешно"))
 
 
     @commands.command(aliases=['onip'])
