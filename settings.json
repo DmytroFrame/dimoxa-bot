@@ -1,11 +1,4 @@
 {
-    "database": {
-        "address": "localhost",
-        "port": 5432,
-        "user": "postgres",
-        "password": ""
-    },
-
     "rconData": {
         "address": "",
         "port": ,
@@ -18,8 +11,15 @@
     },
 
     "mongoData": {
-        "url":        "",
+        "url":        "mongodb+srv://",
         "database":   "",
         "collection": ""
+    },
+    "roles_id": {
+        "controlpanel": ,
+        "leader_FBI": ,
+        "member_FBI": ,
+        "logged_yes": ,
+        "logged_no": 
     }
 }
