@@ -19,6 +19,7 @@ class IdiotCommands(commands.Cog):
     async def aboba(self, ctx):
         await ctx.send("ты гей")
 
+
     @commands.command()
     async def dick(self, ctx):
         size = str(randint(4, 17))
@@ -28,7 +29,6 @@ class IdiotCommands(commands.Cog):
             await ctx.send("У тебя нету члена")
             await asyncio.sleep(1)
             await ctx.send(f"у тебя дырка (вагина) глубеной {size} см")
-
 
 
 

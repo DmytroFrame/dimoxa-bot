@@ -54,25 +54,4 @@ def setup(client):
     #         cursor.update_one({"discordID": ctx.author.id}, {"$set": {"password": password}})
     #         await ctx.send(str("good"))
 
-
-    # @commands.command(aliases=['onip'])
-    # async def onfixetip(self, ctx):
-    #     await ctx.send("я включил тебе двойную аутентификацию")
-    #     cursor = func.cursor_database('users')
-    #     cursor.update_one({"discordID": ctx.author.id}, {"$set": {"fixedIP": True}})
-
-
-    # @commands.command(aliases=['offip'])
-    # async def offfixetip(self, ctx):
-    #     await ctx.send("я выключил тебе двойную аутентификацию")
-    #     cursor = func.cursor_database('users')
-    #     cursor.update_one({"discordID": ctx.author.id}, {"$set": {"fixedIP": False}})
-
-
-    # @commands.command(aliases=['resetip'])
-    # async def resetfixetip(self, ctx):
-    #     await ctx.send("я сбросил твой апий адрес")
-    #     cursor = func.cursor_database('users')
-    #     cursor.update_one({"discordID": ctx.author.id}, {"$set": {"lastIP": None}})
-        
     

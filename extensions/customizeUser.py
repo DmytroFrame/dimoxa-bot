@@ -51,7 +51,7 @@ class CustomizeUser(commands.Cog):
         cursor = func.cursor_database('users')
         cursor.update_one({"discordID": ctx.author.id}, {"$set": {"lastIP": None}})
         
-    
+        
 
 
 
