@@ -45,19 +45,28 @@ class ServerTool(commands.Cog):
     @commands.command(name = 'player')
     @commands.has_role(func.getSettings('roles_id')['logged_yes'])
     async def get_player_info(self, ctx, user):
+        def get_id(user: str) -> int:
+            try:
+                user = user.split('!')
+                user = user[1].split('>')
+                return int(user[0])
+            except:
+                return 0
+
+
         cursor = func.cursor_database('users')
         if cursor.count_documents({"username": user}):
-            for i in cursor.find({"username": user}):
-                await ctx.send(f'Это <@{ i["discordID"] }> \nБаланс: **Хз сколько**¥')#Баланс: **{ i["money"] }**¥
+            for data in cursor.find({"username": user}):
+                await ctx.send(f'Это <@{data["discordID"]}>')#Баланс: **{ i["money"] }**¥
 
-        elif cursor.count_documents({"discordID": int(user[3:-1])}):
-            for i in cursor.find({"discordID": int(user[3:-1])}):
-                await ctx.send(f'Это **{ i["username"] }** \nБаланс: **Хз сколько**¥')#Баланс: **{ i["money"] }**¥
+        elif cursor.count_documents({"discordID": get_id(user)}):
+            for data in cursor.find({"discordID": get_id(user)}):
+                await ctx.send(f'Это **{data["username"]}**')#Баланс: **{ i["money"] }**¥
 
         else:
             await ctx.send(f"Товарища **{user}** у нас нету и не было!")
 
-    
+
 
 def setup(client):
     client.add_cog(ServerTool(client))
