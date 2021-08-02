@@ -33,6 +33,8 @@ class IdiotCommands(commands.Cog):
 
 
 
+
+
 def setup(client):
     client.add_cog(IdiotCommands(client))
 

@@ -3,8 +3,6 @@ import random
 from pymongo import MongoClient
 
 
-
-
 def passwordGen(amount=8):
     charsPass = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     password = ""
@@ -20,7 +18,7 @@ def getSettings(name):
         array = json.load(file)
         file.close()
     return array[name]
-
+    
 
 def readJsonFile(fileName):
     with open(fileName, "r") as file:
@@ -35,7 +33,7 @@ def writeJsonFile(fileName, data):
         file.close()
 
 
-def cursor_database(collection = None):
+def cursor_database(collection=None):
     clientDB = MongoClient(getSettings("mongoData")["url"])
     if collection == None:
         return clientDB[getSettings("mongoData")["database"]]
@@ -45,24 +43,24 @@ def cursor_database(collection = None):
 
 
 def check_validation(userString):
-        if len(userString) < 3 or len(userString) > 22:
-            return False
-         
-        validChars = "_-qwertyuiopasdfghjklzxcvbnm0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
-        customString = ""
-        for user in userString:
-            for valid in validChars:
-                if user == valid:
-                    customString += valid
-                    break
+    if len(userString) < 3 or len(userString) > 22:
+        return False
 
-        return userString == customString
+    validChars = "_-qwertyuiopasdfghjklzxcvbnm0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
+    customString = ""
+    for user in userString:
+        for valid in validChars:
+            if user == valid:
+                customString += valid
+                break
+
+    return userString == customString
 
 
 def check_validation_password(password):
     if len(password) < 8 or len(password) > 32:
         return False
-        
+
     validChars = "_-qwertyuiopasdfghjklzxcvbnm0123456789QWERTYUIOPASDFGHJKLZXCVBNM@#$%!"
     customString = ""
     for user in password:
