@@ -22,8 +22,8 @@ class IdiotCommands(commands.Cog):
 
     @commands.command()
     async def dick(self, ctx):
-        if coolDown(ctx.author.id):
-            return await ctx.send("Не наглей")            
+        if coolDown(ctx.author.id, 300):
+            return await ctx.send("Подожди 5 минут. Я же не могу каждый раз мерить тебе член.")            
 
         size = str(randint(4, 17))
         if randint(1, 20) > 3:
