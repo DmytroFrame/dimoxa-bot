@@ -22,7 +22,7 @@ class IdiotCommands(commands.Cog):
 
     @commands.command()
     async def dick(self, ctx):
-        if coolDown(ctx.author.id, 300):
+        if coolDown(ctx.author.id):
             return await ctx.send("Не наглей")            
 
         size = str(randint(4, 17))
