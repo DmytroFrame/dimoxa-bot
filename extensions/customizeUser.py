@@ -16,6 +16,9 @@ class CustomizeUser(commands.Cog):
 
     @commands.command(aliases=['editpass'])
     async def editpassword(self, ctx, password):
+        """
+            editpass - изменить пароль
+        """
         if not func.check_validation_password(password):
             await ctx.send("хуйня")
         else:
