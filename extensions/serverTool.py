@@ -28,7 +28,8 @@ class ServerTool(commands.Cog):
 
         lastPlayers = int(response.split()[1])
         maxPlayers = int(response.split()[3])
-        arrayPlayers = response.split(': ')[1].split()   
+        if lastPlayers != 0:
+            arrayPlayers = response.split(': ')[1].split()   
 
         if lastPlayers == 0:
             message = "На сервере сейчас никого нету"
