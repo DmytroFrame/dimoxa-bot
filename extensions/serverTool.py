@@ -15,7 +15,6 @@ class ServerTool(commands.Cog):
 
     @commands.command(pass_context=True)
     async def online(self, ctx):
-
         """
             !online - узнать количество игроков и кто на сервере
         """
@@ -23,15 +22,13 @@ class ServerTool(commands.Cog):
         async with MinecraftClient(rconData['address'], rconData['port'], rconData['password']) as mc:
             response = await mc.send('list')
 
-        lastPlayers = int(response.split('§c')[1].split('§')[0])
-        maxPlayers = int(response.split('§c')[2].split('§')[0])
-        arrayPlayers = []
-        for player in response.split(':')[1].split():
-            player = player[:-3]
-            if player[-2:] == '§r':
-                player = player[:-2]
-            arrayPlayers.append(player)
-        
+        arrayDeletedCharacters = ['~', '§4', '§6', '§c', '§f', '§r', ',']
+        for char in arrayDeletedCharacters:
+            response = response.replace(char, '')
+
+        lastPlayers = int(response.split()[1])
+        maxPlayers = int(response.split()[3])
+        arrayPlayers = response.split(': ')[1].split()   
 
         if lastPlayers == 0:
             message = "На сервере сейчас никого нету"
@@ -42,7 +39,7 @@ class ServerTool(commands.Cog):
         elif lastPlayers > 1:
             message = "На сервере сейчас присутствует такие игроки как:"
             for player in arrayPlayers:
-                message += f"\n  {player}"
+                message += f"\n   **`{player}`**"
 
             message += "\nСумарно **{}** игроков из **{}**".format(lastPlayers, maxPlayers)
 
