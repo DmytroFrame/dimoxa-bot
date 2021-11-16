@@ -12,19 +12,23 @@ class ServerTool(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        self.minecraftCharArray = ['§0', '§1', '§2', '§3', '§4', '§5', '§6', '§7', '§8', '§9', '§a', '§b', '§c', '§d', '§e', '§f', '§k', '§l', '§m', '§n', '§o', '§r']
+        self.__rcon = func.getSettings('rconData')
+    
+    def charFilter(self, string: str, charArray: list) -> str:
+        for char in charArray:
+            string = string.replace(char, '')
+        return string
 
     @commands.command(pass_context=True)
     async def online(self, ctx):
         """
             !online - узнать количество игроков и кто на сервере
         """
-        rconData = func.getSettings('rconData')
-        async with MinecraftClient(rconData['address'], rconData['port'], rconData['password']) as mc:
+        async with MinecraftClient(self.__rcon['address'], self.__rcon['port'], self.__rcon['password']) as mc:
             response = await mc.send('list')
 
-        arrayDeletedCharacters = ['~', '§4', '§6', '§c', '§f', '§r', ',']
-        for char in arrayDeletedCharacters:
-            response = response.replace(char, '')
+        response = self.charFilter(response, self.minecraftCharArray + [',', '/'])
 
         lastPlayers = int(response.split()[1])
         maxPlayers = int(response.split()[3])
@@ -45,6 +49,18 @@ class ServerTool(commands.Cog):
             message += "\nСумарно **{}** игроков из **{}**".format(lastPlayers, maxPlayers)
 
         await ctx.send(message)
+
+    @commands.command(aliases=['cmd'])
+    @commands.has_permissions(administrator = True)
+    async def command_to_server(self, ctx, *, cmd):
+        """
+            !cmd - отправить команду на сервер
+        """
+        async with MinecraftClient(self.__rcon['address'], self.__rcon['port'], self.__rcon['password']) as mc:
+            response = await mc.send(cmd)
+
+        response = self.charFilter(response, self.minecraftCharArray)
+        await ctx.send(response)
 
     @commands.command(name='player')
     @commands.has_role(func.getSettings('roles_id')['logged_yes'])
