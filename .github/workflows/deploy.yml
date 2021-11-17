@@ -13,22 +13,22 @@ jobs:
       - run: lscpu
       # Setup key
       - name: ls -a via ssh
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          cd /tmp
-          ls -a
-        host: 52.28.69.16 
-        user: ubuntu
-        key: ${{ secrets.key }}
-      # - run: set -eu
-      # - run: mkdir "$HOME/.ssh"
-      # - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
-      # - run: chmod 600 "$HOME/.ssh/key"
-      # Connect
-      # - run:  ls -all && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ubuntu@52.28.69.16 
-      # Deploy
-      # - run: sudo systemctl stop dmytroBot.service
-      # - run: git pull
-      # - run: sudo systemctl --type=service
-      # - run: sudo systemctl status dmytroBot
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /tmp
+            ls -a
+          host: 52.28.69.16 
+          user: ubuntu
+          key: ${{ secrets.key }}
+        # - run: set -eu
+        # - run: mkdir "$HOME/.ssh"
+        # - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+        # - run: chmod 600 "$HOME/.ssh/key"
+        # Connect
+        # - run:  ls -all && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ubuntu@52.28.69.16 
+        # Deploy
+        # - run: sudo systemctl stop dmytroBot.service
+        # - run: git pull
+        # - run: sudo systemctl --type=service
+        # - run: sudo systemctl status dmytroBot
