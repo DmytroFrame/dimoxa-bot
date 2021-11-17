@@ -15,9 +15,10 @@ jobs:
       - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
-      # Deploy
-      # - run: 
+      # Connect
       - run: rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ubuntu@52.28.69.16
-      - run: ls
-      - run: mkdir "test"
-      - run: ls
+      # Deploy
+      - run: sudo systemctl stop dmytroBot.service
+      - run: git pull
+      - run: sudo systemctl start dmytroBot.service
+      - run: sudo systemctl status dmytroBot.service
