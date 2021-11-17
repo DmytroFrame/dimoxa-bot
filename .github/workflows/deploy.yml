@@ -13,9 +13,8 @@ jobs:
       # Setup key
       - run: set -eu
       - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.KEY }}" > "$HOME/.ssh/key"
+      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
-      - run: echo "${{ secrets.test }}"
       # Deploy
       # - run: 
       - run: ssh -i $HOME/.ssh/key ubuntu@52.28.69.16
