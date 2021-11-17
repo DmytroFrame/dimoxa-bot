@@ -19,4 +19,3 @@ jobs:
             cd pyDmytroBot
             git pull
             sudo systemctl restart dmytroBot.service
-            sudo systemctl status dmytroBot.service
