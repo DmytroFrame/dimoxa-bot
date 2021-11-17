@@ -17,4 +17,5 @@ jobs:
       - run: chmod 600 "$HOME/.ssh/key"
       # Deploy
       # - run: 
-      - run: ssh -i $HOME/.ssh/key ubuntu@52.28.69.16
+      - run: ssh -tt -i $HOME/.ssh/key ubuntu@52.28.69.16
+      - run: mkdir "dodik"
