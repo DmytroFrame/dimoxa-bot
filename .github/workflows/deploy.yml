@@ -17,5 +17,5 @@ jobs:
       - run: chmod 600 "$HOME/.ssh/key"
       # Deploy
       # - run: 
-      - run: ssh -o StrictHostKeyChecking=no -tt -i $HOME/.ssh/key ubuntu@52.28.69.16
+      - run: rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ubuntu@52.28.69.16
       - run: mkdir "dodik"
