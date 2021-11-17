@@ -14,7 +14,7 @@ jobs:
       # Setup key
 
 
-      - name: ls -a via ssh
+      # - name: ls -a via ssh
       uses: fifsky/ssh-action@master
       with:
         command: |
