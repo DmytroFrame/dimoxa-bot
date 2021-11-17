@@ -16,8 +16,11 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /tmp
-            ls -a
+            cd pyDmytroBot
+            git pull
+            sudo systemctl restart dmytroBot
+            sudo systemctl status dmytroBot
+
           host: 52.28.69.16 
           user: ubuntu
           key: ${{ secrets.key }}
