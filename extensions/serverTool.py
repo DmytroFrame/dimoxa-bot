@@ -60,7 +60,7 @@ class ServerTool(commands.Cog):
             response = await mc.send(cmd)
 
         response = self.charFilter(response, self.minecraftCharArray)
-        await ctx.send(response)
+        await ctx.send("```" + response + "```")
 
     @commands.command(name='player')
     @commands.has_role(func.getSettings('roles_id')['logged_yes'])
