@@ -9,9 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Update & reload
-        uses: fifsky/ssh-action@master
+      - uses: fifsky/ssh-action@master
         with:
           host: ${{ secrets.host }}
           user: ${{ secrets.user }}
